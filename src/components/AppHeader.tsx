@@ -1,6 +1,77 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 
+function MountainLogo({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 36 30" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M18 2L5 24h26L18 2z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+        fill="currentColor"
+        fillOpacity="0.18"
+      />
+      <path
+        d="M13 14l5-9 5 9"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+        fill="currentColor"
+        fillOpacity="0.3"
+      />
+      <path
+        d="M5 24l4-4 4 3 5-4 5 4 4-3 4 4"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        fill="none"
+      />
+    </svg>
+  )
+}
+
+function ThemeSwitch({ dark, onToggle }: { dark: boolean; onToggle: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="relative flex h-6 w-11 shrink-0 items-center rounded-full border border-pine/20 bg-pine/8 transition-colors duration-300 ease-premium hover:border-pine/40 dark:border-linen/20 dark:bg-white/10 dark:hover:border-linen/40"
+      style={{ background: dark ? 'rgba(85,122,86,0.18)' : 'rgba(26,51,30,0.06)' }}
+    >
+      {/* Track */}
+      <span className="absolute inset-0 rounded-full" />
+      {/* Thumb */}
+      <span
+        className={`relative z-10 flex h-4 w-4 items-center justify-center rounded-full shadow-sm transition-[transform,background-color] duration-300 ease-premium ${
+          dark
+            ? 'translate-x-[22px] bg-pine-muted'
+            : 'translate-x-[2px] bg-pine'
+        }`}
+      >
+        {/* Sun rays (light) / Moon crescent (dark) — thin outline SVG */}
+        {dark ? (
+          <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none">
+            <path
+              d="M9.5 6.5A3.5 3.5 0 015 2a4 4 0 100 8 3.5 3.5 0 004.5-3.5z"
+              stroke="white"
+              strokeWidth="1"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none">
+            <circle cx="6" cy="6" r="2" stroke="white" strokeWidth="1" />
+            <path d="M6 1v1M6 10v1M1 6h1M10 6h1M2.5 2.5l.7.7M8.8 8.8l.7.7M8.8 3.2l-.7.7M3.2 8.8l-.7.7" stroke="white" strokeWidth="1" strokeLinecap="round"/>
+          </svg>
+        )}
+      </span>
+    </button>
+  )
+}
+
 export function AppHeader() {
   const { user, signOut } = useAuth()
   const [dark, setDark] = useState(false)
@@ -22,48 +93,34 @@ export function AppHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-pine/10 bg-alabaster/80 backdrop-blur-gallery dark:border-white/5 dark:bg-obsidian/80">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <div className="flex items-center gap-3">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+        {/* Logo */}
+        <div className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-pine text-alabaster">
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
-              />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
-            </svg>
+            <MountainLogo className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="font-display text-lg font-semibold tracking-tight text-pine dark:text-linen">
+            <span className="font-display text-base font-semibold tracking-tight text-pine dark:text-linen">
               TravelSnap
-            </h1>
-            <p className="text-xs text-pine-muted dark:text-linen/60">Capture the journey</p>
+            </span>
+            <p className="text-[11px] leading-none text-pine-muted dark:text-linen/60">Your travel bucket list</p>
           </div>
         </div>
 
         {user && (
-          <div className="flex items-center gap-2 sm:gap-3">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="btn-ghost px-2 py-1.5"
-              aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {dark ? (
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                </svg>
-              ) : (
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-                </svg>
-              )}
-            </button>
+          <div className="flex items-center gap-3">
+            <ThemeSwitch dark={dark} onToggle={toggleTheme} />
             <span className="hidden text-sm text-pine-muted sm:inline dark:text-linen/70">
               {user.email}
             </span>
-            <button type="button" onClick={() => signOut()} className="btn-ghost text-xs">
+            <button
+              type="button"
+              onClick={() => signOut()}
+              className="rounded-xl border border-pine/15 bg-transparent px-3 py-1.5 text-xs font-medium text-pine-muted
+                transition-[background-color,border-color,color] duration-300 ease-premium
+                hover:border-red-300 hover:bg-red-50 hover:text-red-600
+                dark:border-linen/15 dark:text-linen/60 dark:hover:border-red-700 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+            >
               Sign out
             </button>
           </div>

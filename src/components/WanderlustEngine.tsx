@@ -59,7 +59,7 @@ export function WanderlustEngine() {
     try {
       const footprint = await buildFootprint()
       if (!footprint) {
-        setError('Mark at least one destination as visited to unlock recommendations.')
+        setError('Mark at least one destination as visited to unlock your next recommendation.')
         setRecommendation(null)
         return
       }
@@ -84,13 +84,13 @@ export function WanderlustEngine() {
     <section className="animate-fade-up" style={{ animationDelay: '240ms' }}>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h2 className="section-title">Wanderlust Engine</h2>
+          <h2 className="section-title">What's Next on Your List?</h2>
           <p className="mt-1 text-sm text-pine-muted dark:text-linen/60">
-            AI-powered next destination based on your unique travel footprint.
+            AI-powered destination suggestion based on the places you've already ticked off.
           </p>
         </div>
         <button type="button" onClick={generate} disabled={loading} className="btn-ghost text-xs">
-          {loading ? 'Thinking…' : 'Refresh'}
+          {loading ? 'Thinking…' : 'Suggest another'}
         </button>
       </div>
 
@@ -98,7 +98,7 @@ export function WanderlustEngine() {
         {loading && !recommendation ? (
           <div className="flex flex-col items-center justify-center gap-3 px-6 py-16">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-pine/20 border-t-pine" />
-            <p className="text-sm text-pine-muted dark:text-linen/50">Analyzing your journeys…</p>
+            <p className="text-sm text-pine-muted dark:text-linen/50">Analysing your bucket list…</p>
           </div>
         ) : error ? (
           <div className="px-6 py-12 text-center">
@@ -108,7 +108,7 @@ export function WanderlustEngine() {
           <div className="grid md:grid-cols-[1fr,1.2fr]">
             <div className="relative min-h-[200px] bg-gradient-to-br from-pine via-pine-muted to-evergreen p-8 sm:p-10">
               <span className="text-xs font-semibold uppercase tracking-widest text-alabaster/60">
-                Your next adventure
+                Add to your bucket list
               </span>
               <h3 className="mt-3 font-display text-3xl font-semibold text-alabaster sm:text-4xl">
                 {recommendation.city}
@@ -123,7 +123,7 @@ export function WanderlustEngine() {
 
               <div className="mt-6">
                 <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-pine-muted dark:text-linen/50">
-                  Recommended spots
+                  Must-see spots to add
                 </p>
                 <ul className="space-y-2">
                   {recommendation.pois.map((poi) => (

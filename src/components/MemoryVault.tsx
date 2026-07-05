@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { useVisitedDestinationsWithPhotos } from '../hooks/useDestinations'
+import type { DestinationWithPhotos } from '../types'
 import { useRandomCover } from '../hooks/useRandomCover'
+
+interface MemoryVaultData {
+  destinations: DestinationWithPhotos[]
+  loading: boolean
+  refresh: () => void
+}
 
 function MemoryVaultCard({
   id,
@@ -36,27 +41,23 @@ function MemoryVaultCard({
         <p className="mt-1 text-xs text-linen/70">
           {photoUrls.length} {photoUrls.length === 1 ? 'photo' : 'photos'}
         </p>
-        <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-linen/90 opacity-0 transition-opacity duration-300 ease-premium group-hover:opacity-100">
+        <span className="mt-3 inline-block text-xs font-medium text-linen/90 opacity-0 transition-opacity duration-300 ease-premium group-hover:opacity-100">
           Open gallery
-          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
         </span>
       </div>
     </Link>
   )
 }
 
-export function MemoryVault() {
-  const { user } = useAuth()
-  const { destinations, loading } = useVisitedDestinationsWithPhotos(user?.id)
+export function MemoryVault({ data }: { data: MemoryVaultData }) {
+  const { destinations, loading } = data
 
   return (
     <section className="animate-fade-up" style={{ animationDelay: '120ms' }}>
       <div className="mb-6">
         <h2 className="section-title">Memory Vault</h2>
         <p className="mt-1 text-sm text-pine-muted dark:text-linen/60">
-          Visited destinations with randomized cover photos — locked for your session.
+          Places you've been — locked with your photo memories.
         </p>
       </div>
 

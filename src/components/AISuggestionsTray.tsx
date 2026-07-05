@@ -38,10 +38,12 @@ export function AISuggestionsTray({ destinationName, onSelect, visible }: AISugg
   useEffect(() => {
     if (!visible || destinationName.trim().length < 3) {
       setSuggestions([])
+      lastFetchedRef.current = ''
       return
     }
 
-    if (destinationName.trim() === lastFetchedRef.current) return
+    // If we have already fetched this name and have results, don't re-fetch
+    if (destinationName.trim() === lastFetchedRef.current && suggestions.length > 0) return
 
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(() => {
@@ -51,7 +53,7 @@ export function AISuggestionsTray({ destinationName, onSelect, visible }: AISugg
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current)
     }
-  }, [destinationName, visible, loadSuggestions])
+  }, [destinationName, visible, loadSuggestions, suggestions.length])
 
   if (!visible || destinationName.trim().length < 3) return null
 
@@ -59,7 +61,7 @@ export function AISuggestionsTray({ destinationName, onSelect, visible }: AISugg
     <div className="animate-slide-down mt-3 rounded-xl border border-pine/10 bg-white/90 p-3 dark:border-white/10 dark:bg-evergreen/90">
       <div className="mb-2 flex items-center gap-2">
         <span className="text-xs font-semibold uppercase tracking-wider text-pine-muted dark:text-linen/60">
-          AI Suggestions
+          AI Suggestions for {destinationName}
         </span>
         {loading && (
           <span className="h-3 w-3 animate-spin rounded-full border border-pine/20 border-t-pine" />
@@ -69,7 +71,7 @@ export function AISuggestionsTray({ destinationName, onSelect, visible }: AISugg
       {error && <p className="text-xs text-red-600 dark:text-red-400">{error}</p>}
 
       {!loading && !error && suggestions.length === 0 && (
-        <p className="text-xs text-pine-muted dark:text-linen/50">No suggestions yet — keep typing.</p>
+        <p className="text-xs text-pine-muted dark:text-linen/50">Fetching suggestions…</p>
       )}
 
       <div className="flex flex-wrap gap-2">

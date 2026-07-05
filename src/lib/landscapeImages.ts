@@ -1,22 +1,24 @@
+// All URLs use Unsplash's stable photo IDs with explicit sizing.
+// Verified working photos — do not swap IDs without testing.
 export const LANDSCAPE_IMAGES = [
   {
     url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80',
     caption: 'Alpine ridgelines at first light',
   },
   {
-    url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80',
-    caption: 'Sunlit valleys and winding rivers',
+    url: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=80',
+    caption: 'Fjords at golden hour',
   },
   {
-    url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80',
-    caption: 'Mist rolling through northern forests',
+    url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=80',
+    caption: 'Rocky peaks under open sky',
   },
   {
-    url: 'https://images.unsplash.com/photo-1433086966358-550fe5f9787f?w=1920&q=80',
-    caption: 'Waterfalls hidden in the coastal range',
+    url: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1920&q=80',
+    caption: 'Coastal cliffs and sea spray',
   },
   {
-    url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&q=80',
+    url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=80',
     caption: 'Still lakes mirroring the sky',
   },
   {
@@ -28,7 +30,7 @@ export const LANDSCAPE_IMAGES = [
     caption: 'Ancient woodland paths',
   },
   {
-    url: 'https://images.unsplash.com/photo-1472214103451-9374aa1f794f?w=1920&q=80',
-    caption: 'Golden grasslands stretching to the horizon',
+    url: 'https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=1920&q=80',
+    caption: 'Golden grasslands at dusk',
   },
 ]
