@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-alabaster text-charcoal font-body dark:bg-obsidian dark:text-linen;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-2xl border border-white/10 bg-white/70 backdrop-blur-gallery shadow-[0_8px_32px_rgba(26,51,30,0.08)]
+      dark:border-white/5 dark:bg-evergreen/80;
+  }
+
+  .glass-panel-strong {
+    @apply rounded-2xl border border-pine/10 bg-alabaster/90 backdrop-blur-gallery shadow-[0_12px_40px_rgba(26,51,30,0.12)]
+      dark:border-white/10 dark:bg-obsidian/90;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-pine px-5 py-2.5 text-sm font-semibold text-alabaster
+      transition-[transform,opacity,background-color] duration-300 ease-premium
+      hover:bg-pine-muted active:scale-[0.98]
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-pine/15 bg-transparent px-4 py-2 text-sm font-medium
+      text-pine transition-[transform,opacity,background-color,border-color] duration-300 ease-premium
+      hover:border-pine/30 hover:bg-pine/5 active:scale-[0.98]
+      dark:border-linen/15 dark:text-linen dark:hover:border-linen/30 dark:hover:bg-white/5;
+  }
+
+  .input-field {
+    @apply w-full rounded-xl border border-pine/15 bg-white/80 px-4 py-2.5 text-sm text-charcoal
+      placeholder:text-pine-muted/60 outline-none transition-[border-color,box-shadow] duration-300 ease-premium
+      focus:border-pine/40 focus:ring-2 focus:ring-pine/10
+      dark:border-white/10 dark:bg-obsidian/60 dark:text-linen dark:placeholder:text-linen/40 dark:focus:border-pine-muted/50;
+  }
+
+  .section-title {
+    @apply font-display text-2xl font-semibold tracking-tight text-pine dark:text-linen;
+  }
+
+  .hero-backdrop {
+    @apply pointer-events-none fixed inset-0 -z-10 overflow-hidden;
+  }
+
+  .hero-backdrop::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-b from-alabaster/70 via-alabaster/85 to-alabaster
+      dark:from-obsidian/60 dark:via-obsidian/85 dark:to-obsidian;
+  }
+
+  .hero-backdrop img {
+    @apply h-full w-full object-cover opacity-30 saturate-[0.65] blur-[2px]
+      dark:opacity-20;
+  }
+
+  .masonry-grid {
+    column-count: 1;
+    column-gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .masonry-grid {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .masonry-grid {
+      column-count: 3;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .masonry-grid {
+      column-count: 4;
+    }
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+}
