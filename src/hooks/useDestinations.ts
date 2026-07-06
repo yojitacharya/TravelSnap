@@ -93,9 +93,10 @@ export function useVisitedDestinationsWithPhotos(userId: string | undefined) {
     setLoading(true)
     const { data } = await supabase
       .from('destinations')
-      .select('*, destination_photos(*)')
+      .select('*, destination_photos(id, storage_url)')
       .eq('is_visited', true)
       .order('created_at', { ascending: false })
+      .limit(1, { foreignTable: 'destination_photos' })
 
     setDestinations((data as DestinationWithPhotos[]) ?? [])
     setLoading(false)

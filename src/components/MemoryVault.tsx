@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { DestinationWithPhotos } from '../types'
 import { useRandomCover } from '../hooks/useRandomCover'
+import { toThumbnailUrl } from '../lib/supabaseClient'
 
 interface MemoryVaultData {
   destinations: DestinationWithPhotos[]
@@ -26,9 +27,11 @@ function MemoryVaultCard({
     >
       {coverUrl ? (
         <img
-          src={coverUrl}
+          src={toThumbnailUrl(coverUrl, 800, 75)}
           alt=""
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-premium group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
         />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-pine-muted/40 to-pine/60" />

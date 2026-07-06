@@ -38,7 +38,7 @@ export function useDestinationPhotos(destinationId: string | undefined, userId: 
   const uploadPhotos = async (files: File[]) => {
     if (!destinationId || !userId) return
 
-    for (const file of files) {
+    const uploadOne = async (file: File): Promise<DestinationPhoto> => {
       const ext = file.name.split('.').pop() ?? 'jpg'
       const path = `${userId}/${destinationId}/${crypto.randomUUID()}.${ext}`
 
@@ -46,7 +46,6 @@ export function useDestinationPhotos(destinationId: string | undefined, userId: 
         cacheControl: '3600',
         upsert: false,
       })
-
       if (uploadError) throw uploadError
 
       const { data: urlData } = supabase.storage.from(PHOTOS_BUCKET).getPublicUrl(path)
@@ -60,10 +59,13 @@ export function useDestinationPhotos(destinationId: string | undefined, userId: 
         })
         .select()
         .single()
-
       if (insertError) throw insertError
-      setPhotos((prev) => [data as DestinationPhoto, ...prev])
+
+      return data as DestinationPhoto
     }
+
+    const uploaded = await Promise.all(files.map(uploadOne))
+    setPhotos((prev) => [...uploaded.reverse(), ...prev])
   }
 
   const deletePhoto = async (photoId: string, storageUrl: string) => {

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useDestinationPhotos } from '../hooks/usePhotos'
-import { supabase } from '../lib/supabaseClient'
+import { supabase, toThumbnailUrl } from '../lib/supabaseClient'
 import { compressImages } from '../lib/imageCompression'
 import type { Destination } from '../types'
 
@@ -172,10 +172,11 @@ export function GalleryView() {
                   style={{ animationDelay: `${Math.min(index * 40, 400)}ms` }}
                 >
                   <img
-                    src={photo.storage_url}
+                    src={toThumbnailUrl(photo.storage_url)}
                     alt=""
                     className={`w-full rounded-xl object-cover transition-[transform,filter] duration-300 ease-premium group-hover:scale-[1.02] ${isPending ? 'brightness-50' : ''}`}
                     loading="lazy"
+                    decoding="async"
                   />
 
                   {/* Default delete trigger */}
